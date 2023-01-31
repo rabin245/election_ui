@@ -30,6 +30,7 @@ function AdminDashboard() {
           <button className="mt-8 bg-blue-400 rounded-2xl p-5 text-white text-2xl font-bold hover:shadow-xl active:ring active:ring-blue-100">
             End election
           </button>
+          <span className="mt-8">The election has not started yet.</span>
         </main>
       </div>
     </div>
