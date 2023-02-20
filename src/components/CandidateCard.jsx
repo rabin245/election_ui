@@ -4,7 +4,7 @@ function CandidateCard({ name, onClick, active }) {
   return (
     <div
       className={`card border border-gray-300 rounded-sm hover:shadow-xl h-max
-      ${active && "shadow-2xl"}
+      ${active && "shadow-2xl ring-1 ring-blue-400"}
       `}
       onClick={onClick}
     >
