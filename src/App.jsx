@@ -2,6 +2,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import SideBar from "./components/SideBar";
 import VoterDashboard from "./pages/VoterDashboard";
+import Results from "./pages/Results";
 
 const Layout = () => {
   return (
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/voter",
         element: <VoterDashboard />,
+      },
+      {
+        path: "/results",
+        element: <Results />,
       },
     ],
   },
