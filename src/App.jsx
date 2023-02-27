@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import SideBar from "./components/SideBar";
 import VoterDashboard from "./pages/VoterDashboard";
 import Results from "./pages/Results";
+import Login from "./pages/Login";
 
 const Layout = () => {
   return (
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/login",
+    element: <Login />,
+  }
 ]);
 
 function App() {
