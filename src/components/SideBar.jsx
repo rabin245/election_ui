@@ -23,14 +23,16 @@ function SideBar() {
 
       {/* sidebar */}
       <div
-        className={`sidebar fixed top-0 bottom-0 bg-gray-900 p-2 lg:left-0 overflow-y-auto w-64 text-center z-2 shadow-xl shadow-black
+        className={`sidebar fixed top-0 bottom-0 bg-gray-900 p-2 lg:left-0 overflow-y-auto overflow-x-hidden w-64 text-center z-2 shadow-xl shadow-black
          ${open ? "left-0 " : "-left-64"} 
           transition-all duration-500 ease-in-out
         `}
       >
         <div className="headingPart text-gray-100 mt-1 flex items-center justify-between">
           <div className="flex items-center p-2">
-            <img src={logo} alt="logo" className="h-8 " />
+            <Link to="/">
+              <img src={logo} alt="logo" className="h-8 " />
+            </Link>
             <h1 className="text-2xl font-bold ml-3">Election</h1>
           </div>
           {/* close button */}
@@ -73,15 +75,22 @@ function SideBar() {
           <SideBarButton title="Results">
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              className="icon icon-tabler icon-tabler-file-analytics"
+              width={24}
+              height={24}
               viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6"
+              strokeWidth="1.75"
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              <path
-                fillRule="evenodd"
-                d="M1.5 5.625c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v12.75c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 18.375V5.625zM21 9.375A.375.375 0 0020.625 9h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zm0 3.75a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zm0 3.75a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zM10.875 18.75a.375.375 0 00.375-.375v-1.5a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5zM3.375 15h7.5a.375.375 0 00.375-.375v-1.5a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375zm0-3.75h7.5a.375.375 0 00.375-.375v-1.5A.375.375 0 0010.875 9h-7.5A.375.375 0 003 9.375v1.5c0 .207.168.375.375.375z"
-                clipRule="evenodd"
-              />
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+              <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+              <path d="M9 17l0 -5"></path>
+              <path d="M12 17l0 -1"></path>
+              <path d="M15 17l0 -3"></path>
             </svg>
           </SideBarButton>
         </Link>
@@ -97,14 +106,16 @@ function SideBar() {
             <SideBarButton title="Logout">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
+                fill="none"
                 viewBox="0 0 24 24"
-                fill="currentColor"
+                strokeWidth={1.5}
+                stroke="currentColor"
                 className="w-6 h-6"
               >
                 <path
-                  fillRule="evenodd"
-                  d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm5.03 4.72a.75.75 0 010 1.06l-1.72 1.72h10.94a.75.75 0 010 1.5H10.81l1.72 1.72a.75.75 0 11-1.06 1.06l-3-3a.75.75 0 010-1.06l3-3a.75.75 0 011.06 0z"
-                  clipRule="evenodd"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
                 />
               </svg>
             </SideBarButton>
@@ -127,6 +138,13 @@ function SideBar() {
             </SideBarButton>
           </Link>
         )}
+
+        {loggedin ? (
+          <div className="text-white absolute bottom-1 flex flex-wrap w-56 text-xs break-all">
+            {/* display public address if logged in */}
+            <span>0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266</span>
+          </div>
+        ) : null}
       </div>
     </div>
   );
