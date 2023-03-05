@@ -61,8 +61,8 @@ function Results() {
               </tr>
             </thead>
             <tbody className="border border-gray-300  ">
-              {data.map((row) => (
-                <tr className="even:bg-blue-100">
+              {data.map((row, index) => (
+                <tr key={index} className="even:bg-blue-100">
                   <td>{row.id}</td>
                   <td>{row.name}</td>
                   <td>{row.votes}</td>
