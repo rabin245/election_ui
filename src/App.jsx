@@ -4,6 +4,7 @@ import SideBar from "./components/SideBar";
 import VoterDashboard from "./pages/VoterDashboard";
 import Results from "./pages/Results";
 import LandingPage from "./pages/LandingPage";
+import Login from "./pages/Login";
 
 const Layout = () => {
   return (
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/login",
+    element: <Login />,
+  }
 ]);
 
 function App() {
