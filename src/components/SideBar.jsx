@@ -10,7 +10,7 @@ function Hr() {
 }
 
 function SideBar() {
-  const { loggedin } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
 
   return (
@@ -97,7 +97,7 @@ function SideBar() {
 
         <Hr />
 
-        {loggedin ? (
+        {user ? (
           <div
             onClick={() => {
               // logout function and redirect
@@ -139,7 +139,7 @@ function SideBar() {
           </Link>
         )}
 
-        {loggedin ? (
+        {user ? (
           <div className="text-white absolute bottom-1 flex flex-wrap w-56 text-xs break-all">
             {/* display public address if logged in */}
             <span>0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266</span>
