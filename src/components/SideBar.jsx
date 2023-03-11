@@ -3,15 +3,27 @@ import logo from "../assets/ballot.png";
 import SideBarToggleButton from "./SideBarToggleButton";
 import SideBarButton from "./SideBarButton";
 import { AuthContext } from "../context/authContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Hr() {
   return <hr className="bg-gray-600 h-px border-0 my-2" />;
 }
 
 function SideBar() {
-  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const { user, isAdmin, logout } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
+
+  const handleLogOut = async () => {
+    try {
+      await logout();
+      navigate("/");
+      navigate(0);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -98,11 +110,7 @@ function SideBar() {
         <Hr />
 
         {user ? (
-          <div
-            onClick={() => {
-              // logout function and redirect
-            }}
-          >
+          <div onClick={handleLogOut}>
             <SideBarButton title="Logout">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -142,6 +150,7 @@ function SideBar() {
         {user ? (
           <div className="text-white absolute bottom-1 flex flex-wrap w-56 text-xs break-all">
             {/* display public address if logged in */}
+            {isAdmin ? <span>Admin</span> : null}
             <span>0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266</span>
           </div>
         ) : null}
