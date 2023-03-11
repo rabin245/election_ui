@@ -16,14 +16,22 @@ export const AuthContextProvider = ({ children }) => {
     () => JSON.parse(localStorage.getItem("user")) || null
   );
 
+  const [isAdmin, setIsAdmin] = useState(false);
+
   async function login(userInputs) {
     const response = await axiosInstance.post("/auth/login", userInputs);
     setUser(response.data);
     console.log(response.data);
   }
 
-  async function test() {
-    const response = await axiosInstance.get("/");
+  async function register(userInputs) {
+    const response = await axiosInstance.post("/auth/register", userInputs);
+    console.log(response.data);
+  }
+
+  async function logout() {
+    const response = await axiosInstance.post("/auth/logout");
+    setUser(null);
     console.log(response.data);
   }
 
@@ -31,9 +39,12 @@ export const AuthContextProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
-  console.log("user", user);
+  useEffect(() => {
+    setIsAdmin(user?.isAdmin || false);
+  }, [user]);
+
   return (
-    <AuthContext.Provider value={{ user, login, test }}>
+    <AuthContext.Provider value={{ user, isAdmin, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

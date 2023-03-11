@@ -1,25 +1,56 @@
-import axios from "axios";
-import { useRef, useContext } from "react";
+import { useState, useContext, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 
 const Login = () => {
-  const email = useRef();
-  const password = useRef();
+  const navigate = useNavigate();
 
-  const { login, test } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
+
+  const [userInputs, setUserInputs] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState(null);
+
+  const form = useRef(null);
+
+  const checkEmpty = () => {
+    if (userInputs.email === "" || userInputs.password === "") {
+      return true;
+    }
+    return false;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setError(null);
+    setUserInputs((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const user = {
-      email: email.current.value,
-      password: password.current.value,
-    };
+    // check validation
+    if (checkEmpty() || !form.current.checkValidity()) {
+      console.log("Form is invalid");
+      setError("Inputs are invalid");
+      return;
+    }
 
     try {
+      const user = {
+        email: userInputs.email,
+        password: userInputs.password,
+      };
+
       await login(user);
+      navigate("/");
     } catch (error) {
-      console.log(error);
+      console.log(error.response.status, error.response.data);
+
+      setError(error.response.data.message);
     }
   };
 
@@ -29,7 +60,7 @@ const Login = () => {
         <h1 className="text-3xl font-semibold text-center text-blue-500 ">
           Login
         </h1>
-        <form className="mt-6">
+        <form className="mt-6" ref={form}>
           <div className="mb-2">
             <label
               htmlFor="email"
@@ -42,10 +73,14 @@ const Login = () => {
               name="email"
               placeholder="Enter your email"
               className="block w-full px-4 py-2 mt-2 text-sm border rounded-md
-                         focus:border-blue-500 focus:outline-blue-500 "
-              ref={email}
-              required
+                         focus:border-blue-500 focus:outline-blue-500 
+                         invalid:border-red-500 peer/email"
+              value={userInputs.email}
+              onChange={handleChange}
             />
+            <span className="text-sm text-red-500 hidden peer-placeholder-shown/email:!hidden peer-invalid/email:block">
+              Invalid email
+            </span>
           </div>
           <div className="mb-2">
             <label
@@ -60,11 +95,25 @@ const Login = () => {
               placeholder="Enter your password"
               className="block w-full px-4 py-2 mt-2 text-sm border rounded-md
                         focus:border-blue-500 focus:outline-blue-500"
-              ref={password}
+              value={userInputs.password}
+              onChange={handleChange}
               required
             />
           </div>
+          <div className="flex justify-center text-sm text-gray-500">
+            <span>
+              Don't have an account?{" "}
+              <Link to="/register">
+                <span className="text-blue-400 hover:text-blue-600 hover:underline">
+                  Register
+                </span>
+              </Link>
+            </span>
+          </div>
           <div className="mt-6">
+            {error && (
+              <div className="text-sm text-center text-red-500">{error}</div>
+            )}
             <button
               className="w-full px-4 py-2 font-bold tracking-wider text-white rounded-md
                         bg-blue-500 hover:bg-blue-700 focus:outline-none active:shadow-lg"
