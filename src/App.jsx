@@ -4,8 +4,15 @@ import Results from "./pages/Results";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { useContext } from "react";
+import { ContractContext } from "./context/contractContext";
+import MetaMaskError from "./pages/MetaMaskError";
 
 const Layout = () => {
+  const { provider, signer, contract } = useContext(ContractContext);
+
+  console.log(provider, signer, contract);
+
   return (
     <>
       <SideBar />
@@ -41,9 +48,15 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const { isMetaMaskInstalled } = useContext(ContractContext);
+
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      {isMetaMaskInstalled ? (
+        <RouterProvider router={router} />
+      ) : (
+        <MetaMaskError />
+      )}
     </div>
   );
 }
