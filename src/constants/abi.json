@@ -17,14 +17,67 @@
   },
   {
     "anonymous": false,
-    "inputs": [],
-    "name": "electionEnded",
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "partyName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "imageUrl",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "votes",
+            "type": "uint256"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Election.Candidate",
+        "name": "candidate",
+        "type": "tuple"
+      }
+    ],
+    "name": "CandidateAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "CandidateRemoved",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [],
-    "name": "electionStarted",
+    "name": "ElectionEnded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [],
+    "name": "ElectionStarted",
     "type": "event"
   },
   {
@@ -64,7 +117,7 @@
         "type": "tuple"
       }
     ],
-    "name": "voteCasted",
+    "name": "VoteCasted",
     "type": "event"
   },
   {
@@ -85,7 +138,7 @@
         "type": "string"
       }
     ],
-    "name": "addCandidates",
+    "name": "addCandidate",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -188,11 +241,6 @@
     "name": "getCurrentVoterToCandidateId",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
@@ -216,12 +264,12 @@
   },
   {
     "inputs": [],
-    "name": "getVoters",
+    "name": "getHasVoted",
     "outputs": [
       {
-        "internalType": "address[]",
+        "internalType": "bool",
         "name": "",
-        "type": "address[]"
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -229,12 +277,12 @@
   },
   {
     "inputs": [],
-    "name": "hasVoted",
+    "name": "getVoters",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "address[]",
         "name": "",
-        "type": "bool"
+        "type": "address[]"
       }
     ],
     "stateMutability": "view",
