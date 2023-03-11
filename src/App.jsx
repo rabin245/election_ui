@@ -1,9 +1,7 @@
-import AdminDashboard from "./pages/AdminDashboard";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import SideBar from "./components/SideBar";
-import VoterDashboard from "./pages/VoterDashboard";
 import Results from "./pages/Results";
-import LandingPage from "./pages/LandingPage";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
@@ -24,15 +22,7 @@ const router = createBrowserRouter([
       // dashboard or the landing page
       {
         path: "/",
-        element: <LandingPage />,
-      },
-      {
-        path: "/admin",
-        element: <AdminDashboard />,
-      },
-      {
-        path: "/voter",
-        element: <VoterDashboard />,
+        element: <Home />,
       },
       {
         path: "/results",

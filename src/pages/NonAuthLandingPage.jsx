@@ -1,10 +1,9 @@
-import { Link } from "react-router-dom";
 import Banner from "../assets/banner.png";
 import UserIcon from "../assets/userIcon.png";
 import ResultIcon from "../assets/resultIcon.png";
 import Card from "../components/Card";
 
-function LandingPage() {
+export default function NonAuthLandingPage() {
   return (
     <div className="mainDiv">
       {/* main body */}
@@ -45,5 +44,3 @@ function LandingPage() {
     </div>
   );
 }
-
-export default LandingPage;
