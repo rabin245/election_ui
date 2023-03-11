@@ -1,8 +1,11 @@
 import { useContext, useState } from "react";
 import CandidatesList from "../components/CandidatesList";
 import { ContractContext } from "../context/contractContext";
+import { useNavigate } from "react-router-dom";
 
 function VoterDashboard() {
+  const navigate = useNavigate();
+
   const [currentCandidate, setCurrrentCandidate] = useState(null);
 
   const { voteToCandidate } = useContext(ContractContext);
@@ -10,6 +13,7 @@ function VoterDashboard() {
   const handleVote = () => {
     console.log("Voting to candidate: ", currentCandidate);
     voteToCandidate(currentCandidate);
+    navigate("/results");
   };
 
   const selectCurrentCandidate = (id) => {

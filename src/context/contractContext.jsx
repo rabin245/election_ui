@@ -103,7 +103,7 @@ export const ContractContextProvider = ({ children }) => {
         console.log("Vote casted to candidate", updatedCandidate);
         setCandidates((prev) => {
           return prev.map((candidate) => {
-            if (candidate.id === updatedCandidate.id.toString()) {
+            if (candidate.id.toString() === updatedCandidate.id.toString()) {
               return { ...candidate, votes: updatedCandidate.votes.toString() };
             }
             return candidate;
