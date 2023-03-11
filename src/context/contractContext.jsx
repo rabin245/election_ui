@@ -4,83 +4,18 @@ import { abi, contractAddress } from "../constants/index";
 
 export const ContractContext = createContext();
 
-export const ContractContextProvider = ({ children }) => {
-  const [provider, setProvider] = useState(null);
-  const [signer, setSigner] = useState(null);
-  const [contract, setContract] = useState(null);
-  const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState(false);
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer = provider.getSigner();
+const contract = new ethers.Contract(contractAddress, abi, signer);
 
+export const ContractContextProvider = ({ children }) => {
+  const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState(false);
+  const [address, setAddress] = useState(null);
   const [isElectionStarted, setIsElectionStarted] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
   const [candidates, setCandidates] = useState([]);
   const [currentVoterToCandidateId, setCurrentVoterToCandidateId] =
     useState(null);
-
-  async function init() {
-    if (typeof window.ethereum !== "undefined") {
-      setIsMetaMaskInstalled(true);
-      const addresses = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      console.log(addresses);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(contractAddress, abi, signer);
-      setProvider(provider);
-      setSigner(signer);
-      setContract(contract);
-    } else {
-      console.log("Please install MetaMask");
-      setIsMetaMaskInstalled(false);
-    }
-
-    // event listeners
-    contract.on("ElectionStarted", () => {
-      console.log("Election has started");
-      setIsElectionStarted(true);
-      getCandidates();
-    });
-
-    contract.on("ElectionEnded", () => {
-      console.log("Election has ended");
-      setIsElectionStarted(false);
-    });
-
-    contract.on("VoteCasted", (updatedCandidate) => {
-      console.log("Vote casted to candidate", updatedCandidate);
-      setCandidates((prev) => {
-        return prev.map((candidate) => {
-          if (candidate.id === updatedCandidate.id.toString()) {
-            return { ...candidate, votes: updatedCandidate.votes.toString() };
-          }
-          return candidate;
-        });
-      });
-    });
-
-    contract.on("CandidateAdded", (candidate) => {
-      console.log("Candidate added", candidate);
-      setCandidates((prev) => {
-        return [
-          ...prev,
-          {
-            id: candidate.id.toString(),
-            name: candidate.name,
-            partyName: candidate.partyName,
-            votes: candidate.votes.toString(),
-            imageUrl: candidate.imageUrl,
-          },
-        ];
-      });
-    });
-
-    contract.on("CandidateRemoved", (id) => {
-      console.log("Candidate removed", id);
-      setCandidates((prev) => {
-        return prev.filter((candidate) => candidate.id !== id.toString());
-      });
-    });
-  }
 
   // state changing functions
   const startElection = async () => {
@@ -109,7 +44,7 @@ export const ContractContextProvider = ({ children }) => {
 
   // view functions
   const getHasVoted = async () => {
-    const hasVoted = await contract.hasVoted();
+    const hasVoted = await contract.getHasVoted();
     setHasVoted(hasVoted);
   };
 
@@ -120,7 +55,7 @@ export const ContractContextProvider = ({ children }) => {
 
   const getCurrentVoterToCandidateId = async () => {
     const currentVoterToCandidateId =
-      await contract.currentVoterToCandidateId();
+      await contract.getCurrentVoterToCandidateId();
     setCurrentVoterToCandidateId(currentVoterToCandidateId);
   };
 
@@ -130,8 +65,75 @@ export const ContractContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    async function init() {
+      if (typeof window.ethereum !== "undefined") {
+        setIsMetaMaskInstalled(true);
+        const addresses = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        console.log(addresses);
+        setAddress(addresses[0]);
+      } else {
+        console.log("Please install MetaMask");
+        setIsMetaMaskInstalled(false);
+      }
+    }
+
     init();
     getIsElectionStarted();
+  }, []);
+
+  useEffect(() => {
+    console.log("now listening to events");
+    // event listeners
+
+    setTimeout(() => {
+      contract.on("ElectionStarted", () => {
+        console.log("Election has started");
+        setIsElectionStarted(true);
+        getCandidates();
+      });
+
+      contract.on("ElectionEnded", () => {
+        console.log("Election has ended");
+        setIsElectionStarted(false);
+      });
+
+      contract.on("VoteCasted", (updatedCandidate) => {
+        console.log("Vote casted to candidate", updatedCandidate);
+        setCandidates((prev) => {
+          return prev.map((candidate) => {
+            if (candidate.id === updatedCandidate.id.toString()) {
+              return { ...candidate, votes: updatedCandidate.votes.toString() };
+            }
+            return candidate;
+          });
+        });
+      });
+
+      contract.on("CandidateAdded", (candidate) => {
+        console.log("Candidate added", candidate);
+        setCandidates((prev) => {
+          return [
+            ...prev,
+            {
+              id: candidate.id.toString(),
+              name: candidate.name,
+              partyName: candidate.partyName,
+              votes: candidate.votes.toString(),
+              imageUrl: candidate.imageUrl,
+            },
+          ];
+        });
+      });
+
+      contract.on("CandidateRemoved", (id) => {
+        console.log("Candidate removed", id);
+        setCandidates((prev) => {
+          return prev.filter((candidate) => candidate.id !== id.toString());
+        });
+      });
+    }, 4000);
   }, []);
 
   useEffect(() => {
@@ -148,9 +150,6 @@ export const ContractContextProvider = ({ children }) => {
     <ContractContext.Provider
       value={{
         isMetaMaskInstalled,
-        provider,
-        signer,
-        contract,
         startElection,
         endElection,
         voteToCandidate,
@@ -164,6 +163,7 @@ export const ContractContextProvider = ({ children }) => {
         hasVoted,
         candidates,
         currentVoterToCandidateId,
+        address,
       }}
     >
       {children}
