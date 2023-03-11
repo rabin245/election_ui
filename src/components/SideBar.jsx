@@ -4,6 +4,7 @@ import SideBarToggleButton from "./SideBarToggleButton";
 import SideBarButton from "./SideBarButton";
 import { AuthContext } from "../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
+import { ContractContext } from "../context/contractContext";
 
 function Hr() {
   return <hr className="bg-gray-600 h-px border-0 my-2" />;
@@ -13,6 +14,7 @@ function SideBar() {
   const navigate = useNavigate();
 
   const { user, isAdmin, logout } = useContext(AuthContext);
+  const { address } = useContext(ContractContext);
   const [open, setOpen] = useState(false);
 
   const handleLogOut = async () => {
@@ -150,8 +152,7 @@ function SideBar() {
         {user ? (
           <div className="text-white absolute bottom-1 flex flex-wrap w-56 text-xs break-all">
             {/* display public address if logged in */}
-            {isAdmin ? <span>Admin</span> : null}
-            <span>0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266</span>
+            <span>{address}</span>
           </div>
         ) : null}
       </div>

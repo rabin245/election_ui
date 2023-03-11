@@ -9,10 +9,6 @@ import { ContractContext } from "./context/contractContext";
 import MetaMaskError from "./pages/MetaMaskError";
 
 const Layout = () => {
-  const { provider, signer, contract } = useContext(ContractContext);
-
-  console.log(provider, signer, contract);
-
   return (
     <>
       <SideBar />
