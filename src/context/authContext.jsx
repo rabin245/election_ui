@@ -22,8 +22,14 @@ export const AuthContextProvider = ({ children }) => {
     console.log(response.data);
   }
 
-  async function test() {
-    const response = await axiosInstance.get("/");
+  async function register(userInputs) {
+    const response = await axiosInstance.post("/auth/register", userInputs);
+    console.log(response.data);
+  }
+
+  async function logout() {
+    const response = await axiosInstance.get("/auth/logout");
+    setUser(null);
     console.log(response.data);
   }
 
@@ -31,9 +37,8 @@ export const AuthContextProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
-  console.log("user", user);
   return (
-    <AuthContext.Provider value={{ user, login, test }}>
+    <AuthContext.Provider value={{ user, login, register }}>
       {children}
     </AuthContext.Provider>
   );
