@@ -1,9 +1,11 @@
 import CandidateCard from "../components/CandidateCard";
 import { useEffect, useState, useContext } from "react";
 import { ContractContext } from "../context/contractContext";
+import { AuthContext } from "../context/authContext";
 
 export default function CandidatesList({ currentCandidate, onClick }) {
-  const { candidates: cands } = useContext(ContractContext);
+  const { candidates: cands, removeCandidate } = useContext(ContractContext);
+  const { isAdmin } = useContext(AuthContext);
 
   const [candidates, setCandidates] = useState([]);
 
@@ -25,6 +27,8 @@ export default function CandidatesList({ currentCandidate, onClick }) {
             onClick(cand.id.toString());
           }}
           active={currentCandidate === cand.id.toString()}
+          isAdmin={isAdmin}
+          onRemove={() => removeCandidate(cand.id.toString())}
         />
       ))}
     </div>

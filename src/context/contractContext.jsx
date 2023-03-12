@@ -87,53 +87,53 @@ export const ContractContextProvider = ({ children }) => {
     console.log("now listening to events");
     // event listeners
 
-    setTimeout(() => {
-      contract.on("ElectionStarted", () => {
-        console.log("Election has started");
-        setIsElectionStarted(true);
-        getCandidates();
-      });
+    contract.on("ElectionStarted", () => {
+      console.log("Election has started");
+      setIsElectionStarted(true);
+      getCandidates();
+    });
 
-      contract.on("ElectionEnded", () => {
-        console.log("Election has ended");
-        setIsElectionStarted(false);
-      });
+    contract.on("ElectionEnded", () => {
+      console.log("Election has ended");
+      setIsElectionStarted(false);
+    });
 
-      contract.on("VoteCasted", (updatedCandidate) => {
-        console.log("Vote casted to candidate", updatedCandidate);
-        setCandidates((prev) => {
-          return prev.map((candidate) => {
-            if (candidate.id.toString() === updatedCandidate.id.toString()) {
-              return { ...candidate, votes: updatedCandidate.votes.toString() };
-            }
-            return candidate;
-          });
+    contract.on("VoteCasted", (updatedCandidate) => {
+      console.log("Vote casted to candidate", updatedCandidate);
+      setCandidates((prev) => {
+        return prev.map((candidate) => {
+          if (candidate.id.toString() === updatedCandidate.id.toString()) {
+            return { ...candidate, votes: updatedCandidate.votes.toString() };
+          }
+          return candidate;
         });
       });
+    });
 
-      contract.on("CandidateAdded", (candidate) => {
-        console.log("Candidate added", candidate);
-        setCandidates((prev) => {
-          return [
-            ...prev,
-            {
-              id: candidate.id.toString(),
-              name: candidate.name,
-              partyName: candidate.partyName,
-              votes: candidate.votes.toString(),
-              imageUrl: candidate.imageUrl,
-            },
-          ];
-        });
+    contract.on("CandidateAdded", (candidate) => {
+      console.log("Candidate added", candidate);
+      setCandidates((prev) => {
+        return [
+          ...prev,
+          {
+            id: candidate.id.toString(),
+            name: candidate.name,
+            partyName: candidate.partyName,
+            votes: candidate.votes.toString(),
+            imageUrl: candidate.imageUrl,
+          },
+        ];
       });
+    });
 
-      contract.on("CandidateRemoved", (id) => {
-        console.log("Candidate removed", id);
-        setCandidates((prev) => {
-          return prev.filter((candidate) => candidate.id !== id.toString());
-        });
+    contract.on("CandidateRemoved", (id) => {
+      console.log("Candidate removed", id);
+      setCandidates((prev) => {
+        return prev.filter(
+          (candidate) => candidate.id.toString() !== id.toString()
+        );
       });
-    }, 4000);
+    });
   }, []);
 
   useEffect(() => {

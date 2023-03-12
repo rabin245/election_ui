@@ -7,6 +7,8 @@ import Register from "./pages/Register";
 import { useContext } from "react";
 import { ContractContext } from "./context/contractContext";
 import MetaMaskError from "./pages/MetaMaskError";
+import CandidatesPage from "./pages/CandidatesPage";
+import CreateCandidate from "./pages/CreateCandidate";
 
 const Layout = () => {
   return (
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: "/results",
         element: <Results />,
+      },
+      {
+        path: "/candidates",
+        element: <CandidatesPage />,
+      },
+      {
+        path: "/candidates/new",
+        element: <CreateCandidate />,
       },
     ],
   },
