@@ -43,11 +43,11 @@ function SideBar() {
         `}
       >
         <div className="headingPart text-gray-100 mt-1 flex items-center justify-between">
-          <div className="flex items-center p-2">
+          <div className="flex items-center py-2 px-4">
             <Link to="/">
-              <img src={logo} alt="logo" className="h-8 " />
+              <img src={logo} alt="logo" className="h-8" />
             </Link>
-            <h1 className="text-2xl font-bold ml-3">Election</h1>
+            <h1 className="text-2xl font-bold ml-2">Election</h1>
           </div>
           {/* close button */}
           <span
@@ -84,6 +84,58 @@ function SideBar() {
             </svg>
           </SideBarButton>
         </Link>
+
+        {(isAdmin || !user) && (
+          <Link to="/candidates">
+            <SideBarButton title="Candidates">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="icon icon-tabler icon-tabler-list-details"
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                strokeWidth="1.75"
+                stroke="currentColor"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M13 5h8"></path>
+                <path d="M13 9h5"></path>
+                <path d="M13 15h8"></path>
+                <path d="M13 19h5"></path>
+                <path d="M3 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path>
+                <path d="M3 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path>
+              </svg>
+            </SideBarButton>
+          </Link>
+        )}
+
+        {isAdmin && (
+          <Link to="/candidates/new">
+            <SideBarButton title="New Candidate">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="icon icon-tabler icon-tabler-user-plus"
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                strokeWidth="1.75"
+                stroke="currentColor"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                <path d="M16 19h6"></path>
+                <path d="M19 16v6"></path>
+                <path d="M6 21v-2a4 4 0 0 1 4 -4h4"></path>
+              </svg>
+            </SideBarButton>
+          </Link>
+        )}
 
         <Link to="/results">
           <SideBarButton title="Results">
