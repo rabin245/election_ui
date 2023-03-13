@@ -37,7 +37,7 @@ function SideBar() {
 
       {/* sidebar */}
       <div
-        className={`sidebar fixed top-0 bottom-0 bg-gray-900 p-2 lg:left-0 overflow-y-auto overflow-x-hidden w-64 text-center z-2 shadow-lg shadow-black 
+        className={`sidebar fixed top-0 bottom-0 bg-gray-900 p-2 lg:left-0 overflow-y-auto overflow-x-hidden w-64 text-center z-20 shadow-lg shadow-black 
          ${open ? "left-0 " : "-left-64"} 
           transition-all duration-500 ease-in-out
         `}
