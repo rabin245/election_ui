@@ -9,6 +9,8 @@ import { ContractContext } from "./context/contractContext";
 import MetaMaskError from "./pages/MetaMaskError";
 import CandidatesPage from "./pages/CandidatesPage";
 import CreateCandidate from "./pages/CreateCandidate";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import ProtectedAuthRoute from "./routes/ProtectedAuthRoute";
 
 const Layout = () => {
   return (
@@ -39,17 +41,29 @@ const router = createBrowserRouter([
       },
       {
         path: "/candidates/new",
-        element: <CreateCandidate />,
+        element: (
+          <ProtectedRoute>
+            <CreateCandidate />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <ProtectedAuthRoute>
+        <Login />
+      </ProtectedAuthRoute>
+    ),
   },
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <ProtectedAuthRoute>
+        <Register />
+      </ProtectedAuthRoute>
+    ),
   },
 ]);
 
