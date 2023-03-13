@@ -1,11 +1,13 @@
 import { useState, useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
+import { ContractContext } from "../context/contractContext";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const { login } = useContext(AuthContext);
+  const { address } = useContext(ContractContext);
 
   const [userInputs, setUserInputs] = useState({
     email: "",
@@ -43,6 +45,7 @@ const Login = () => {
       const user = {
         email: userInputs.email,
         password: userInputs.password,
+        address,
       };
 
       await login(user);
