@@ -14,7 +14,7 @@ function SideBar() {
   const navigate = useNavigate();
 
   const { user, isAdmin, logout } = useContext(AuthContext);
-  const { address } = useContext(ContractContext);
+  const { address, isElectionStarted } = useContext(ContractContext);
   const [open, setOpen] = useState(false);
 
   const handleLogOut = async () => {
@@ -37,7 +37,7 @@ function SideBar() {
 
       {/* sidebar */}
       <div
-        className={`sidebar fixed top-0 bottom-0 bg-gray-900 p-2 lg:left-0 overflow-y-auto overflow-x-hidden w-64 text-center z-2 shadow-xl shadow-black
+        className={`sidebar fixed top-0 bottom-0 bg-gray-900 p-2 lg:left-0 overflow-y-auto overflow-x-hidden w-64 text-center z-2 shadow-xl shadow-black 
          ${open ? "left-0 " : "-left-64"} 
           transition-all duration-500 ease-in-out
         `}
@@ -49,24 +49,44 @@ function SideBar() {
             </Link>
             <h1 className="text-2xl font-bold ml-2">Election</h1>
           </div>
-          {/* close button */}
-          <span
-            className="mr-1 cursor-pointer lg:hidden"
-            onClick={() => setOpen(!open)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-5 "
+
+          <div className="flex items-center">
+            {/* chip */}
+            {isElectionStarted ? (
+              <div className="bg-gray-800 rounded-full py-1 px-[6px] text-xs font-bold relative flex shadow-lg">
+                <span className="text-green-400 inline">Election</span>
+                <span class="absolute flex h-3 w-3 -top-1 right-0">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+              </div>
+            ) : (
+              <div className="bg-gray-800 rounded-full py-1 px-[6px] text-xs font-bold relative flex shadow-lg">
+                <span className="text-red-400 inline">Election</span>
+                <span class="absolute h-3 w-3 -top-1 right-0">
+                  <span class="inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+              </div>
+            )}
+            {/* close button */}
+            <span
+              className="mr-1 cursor-pointer lg:hidden"
+              onClick={() => setOpen(!open)}
             >
-              <path
-                fillRule="evenodd"
-                d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-4"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </span>
+          </div>
         </div>
 
         <Hr />
