@@ -1,6 +1,7 @@
 import Banner from "../assets/banner.png";
 import UserIcon from "../assets/userIcon.png";
 import ResultIcon from "../assets/resultIcon.png";
+import CandidatesIcon from "../assets/candidatesIcon.png";
 import Card from "../components/Card";
 
 export default function NonAuthLandingPage() {
@@ -32,12 +33,12 @@ export default function NonAuthLandingPage() {
           />
 
           <Card
-            title={"Election Result"}
-            icon={ResultIcon}
-            desc={"View the election result"}
-            buttonText={"Go to Result"}
+            title={"Candidates"}
+            icon={CandidatesIcon}
+            desc={"View the candidates for the election"}
+            buttonText={"View Candidates"}
             color={"purple"}
-            link={"/results"}
+            link={"/candidates"}
           />
         </div>
       </div>
