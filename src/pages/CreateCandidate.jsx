@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import { ContractContext } from "../context/contractContext";
 
 const CreateCandidate = () => {
-  const { addCandidate } = useContext(ContractContext);
+  const { addCandidate, isElectionStarted } = useContext(ContractContext);
 
   const initialCandidate = {
     // id: nanoid(),
@@ -97,13 +97,22 @@ const CreateCandidate = () => {
                 />
               </div>
 
-              <div className="mt-2">
+              <div className="mt-2 flex items-center justify-between">
                 <button
-                  className="bg-blue-500 p-3 w-44 text-md font-bold text-white rounded-lg hover:shadow-2xl hover:bg-blue-600 active:ring-1 active:ring-gray-400"
+                  className="bg-blue-500 p-3 w-44 text-md font-bold text-white rounded-lg hover:shadow-2xl hover:bg-blue-600 active:ring-1 active:ring-gray-400 disabled:cursor-not-allowed disabled:opacity-75"
                   onClick={handleSubmit}
+                  disabled={isElectionStarted}
                 >
                   Create
                 </button>
+                {/* create a tool tip */}
+                {isElectionStarted && (
+                  <div className="p-2 rounded bg-red-500 shadow-md cursor-default">
+                    <span className="text-sm text-gray-200">
+                      Election has already started!!!
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

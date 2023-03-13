@@ -7,6 +7,7 @@ function CandidateCard({
   active,
   isAdmin,
   onRemove,
+  isElectionStarted,
 }) {
   return (
     <div
@@ -25,7 +26,11 @@ function CandidateCard({
         </div>
         {isAdmin && (
           <div
-            className="hover:bg-red-400 rounded-full p-2 flex justify-center items-center group"
+            className={`hover:bg-red-400 rounded-full p-2 flex justify-center items-center group ${
+              isElectionStarted
+                ? "cursor-not-allowed opacity-60"
+                : "cursor-pointer"
+            }`}
             onClick={onRemove}
           >
             <svg
