@@ -4,7 +4,11 @@ import { ContractContext } from "../context/contractContext";
 import { AuthContext } from "../context/authContext";
 
 export default function CandidatesList({ currentCandidate, onClick }) {
-  const { candidates: cands, removeCandidate } = useContext(ContractContext);
+  const {
+    candidates: cands,
+    removeCandidate,
+    isElectionStarted,
+  } = useContext(ContractContext);
   const { isAdmin } = useContext(AuthContext);
 
   const [candidates, setCandidates] = useState([]);
@@ -28,7 +32,17 @@ export default function CandidatesList({ currentCandidate, onClick }) {
           }}
           active={currentCandidate === cand.id.toString()}
           isAdmin={isAdmin}
-          onRemove={() => removeCandidate(cand.id.toString())}
+          isElectionStarted={isElectionStarted}
+          onRemove={() => {
+            if (!isElectionStarted) {
+              if (
+                window.confirm(
+                  "Are you sure you want to remove this candidate?"
+                )
+              )
+                removeCandidate(cand.id.toString());
+            }
+          }}
         />
       ))}
     </div>

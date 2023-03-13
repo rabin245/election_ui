@@ -2,7 +2,6 @@ import { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import { ContractContext } from "../context/contractContext";
-import { nanoid } from "nanoid";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -51,7 +50,6 @@ export default function Register() {
 
     try {
       const user = {
-        id: nanoid(),
         ...userInputs,
         address,
       };
