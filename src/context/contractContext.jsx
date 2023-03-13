@@ -17,6 +17,12 @@ export const ContractContextProvider = ({ children }) => {
   const [currentVoterToCandidateId, setCurrentVoterToCandidateId] =
     useState(null);
 
+  // to know which network the user is connected to
+  // as admin address should vary according to the network
+  // useful when deploying to testnet later
+  // signer.getChainId().then((chainId) => console.log(chainId));
+  // signer.getAddress().then((address) => console.log(address));
+
   // state changing functions
   const startElection = async () => {
     const transaction = await contract.startElection();

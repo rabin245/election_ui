@@ -1,11 +1,13 @@
 import { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
+import { ContractContext } from "../context/contractContext";
 import { nanoid } from "nanoid";
 
 export default function Register() {
   const navigate = useNavigate();
   const { register } = useContext(AuthContext);
+  const { address } = useContext(ContractContext);
 
   const [userInputs, setUserInputs] = useState({
     username: "",
@@ -51,8 +53,9 @@ export default function Register() {
       const user = {
         id: nanoid(),
         ...userInputs,
+        address,
       };
-
+      console.log(user);
       await register(user);
       navigate("/login");
     } catch (error) {
