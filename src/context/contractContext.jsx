@@ -67,7 +67,17 @@ export const ContractContextProvider = ({ children }) => {
 
   const getCandidates = async () => {
     const candidates = await contract.getCandidates();
-    setCandidates(candidates);
+    setCandidates(
+      candidates.map((candidate) => {
+        return {
+          id: candidate.id.toString(),
+          name: candidate.name,
+          partyName: candidate.partyName,
+          votes: candidate.votes.toString(),
+          imageUrl: candidate.imageUrl,
+        };
+      })
+    );
   };
 
   useEffect(() => {
@@ -96,7 +106,6 @@ export const ContractContextProvider = ({ children }) => {
     contract.on("ElectionStarted", () => {
       console.log("Election has started");
       setIsElectionStarted(true);
-      getCandidates();
     });
 
     contract.on("ElectionEnded", () => {
@@ -108,7 +117,7 @@ export const ContractContextProvider = ({ children }) => {
       console.log("Vote casted to candidate", updatedCandidate);
       setCandidates((prev) => {
         return prev.map((candidate) => {
-          if (candidate.id.toString() === updatedCandidate.id.toString()) {
+          if (candidate.id === updatedCandidate.id.toString()) {
             return { ...candidate, votes: updatedCandidate.votes.toString() };
           }
           return candidate;
@@ -133,11 +142,9 @@ export const ContractContextProvider = ({ children }) => {
     });
 
     contract.on("CandidateRemoved", (id) => {
-      console.log("Candidate removed", id);
+      console.log("Candidate removed id:", id.toString());
       setCandidates((prev) => {
-        return prev.filter(
-          (candidate) => candidate.id.toString() !== id.toString()
-        );
+        return prev.filter((candidate) => candidate.id !== id.toString());
       });
     });
   }, []);
