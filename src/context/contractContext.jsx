@@ -34,8 +34,13 @@ export const ContractContextProvider = ({ children }) => {
   };
 
   const voteToCandidate = async (id) => {
-    const transaction = await contract.voteToCandidate(id);
-    transaction.wait();
+    try {
+      const transaction = await contract.voteToCandidate(id);
+      transaction.wait();
+      setHasVoted(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const addCandidate = async (id, name, partyName) => {
