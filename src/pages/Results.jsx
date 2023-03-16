@@ -6,7 +6,14 @@ import { BarChart } from "../components/BarChart";
 Chart.register(CategoryScale);
 
 function Results() {
-  const { candidates } = useContext(ContractContext);
+  const { candidates: cands, recentResults } = useContext(ContractContext);
+  const [candidates, setCandidates] = useState([]);
+
+  useEffect(() => {
+    console.log("length of results", recentResults.length);
+    if (recentResults.length > 0) setCandidates(recentResults);
+    else setCandidates(cands);
+  }, [cands, recentResults]);
 
   const resultsList = useMemo(() => {
     return [...candidates].sort((a, b) => {

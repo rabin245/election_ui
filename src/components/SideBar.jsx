@@ -222,7 +222,7 @@ function SideBar() {
         )}
 
         {user ? (
-          <div className="text-white absolute bottom-1 flex flex-wrap w-56 text-xs break-all">
+          <div className="text-white sm:absolute sm:bottom-1 flex flex-wrap w-56 text-xs break-all">
             {/* display public address if logged in */}
             <span>{address}</span>
           </div>

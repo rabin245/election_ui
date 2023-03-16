@@ -16,6 +16,7 @@ export const ContractContextProvider = ({ children }) => {
   const [candidates, setCandidates] = useState([]);
   const [currentVoterToCandidateId, setCurrentVoterToCandidateId] =
     useState(null);
+  const [recentResults, setRecentResults] = useState([]);
 
   // to know which network the user is connected to
   // as admin address should vary according to the network
@@ -85,6 +86,22 @@ export const ContractContextProvider = ({ children }) => {
     );
   };
 
+  const getRecentResults = async () => {
+    const recentResults = await contract.getRecentResults();
+    setRecentResults(
+      recentResults.map((result) => {
+        return {
+          id: result.id.toString(),
+          name: result.name,
+          partyName: result.partyName,
+          votes: result.votes.toString(),
+          imageUrl: result.imageUrl,
+        };
+      })
+    );
+  };
+
+  // useeffects
   useEffect(() => {
     async function init() {
       if (typeof window.ethereum !== "undefined") {
@@ -116,6 +133,7 @@ export const ContractContextProvider = ({ children }) => {
     contract.on("ElectionEnded", () => {
       console.log("Election has ended");
       setIsElectionStarted(false);
+      setRecentResults(candidates);
     });
 
     contract.on("VoteCasted", (updatedCandidate) => {
@@ -162,6 +180,7 @@ export const ContractContextProvider = ({ children }) => {
     getCandidates();
     getHasVoted();
     getCurrentVoterToCandidateId();
+    getRecentResults();
   }, [isElectionStarted]);
 
   return (
@@ -182,6 +201,7 @@ export const ContractContextProvider = ({ children }) => {
         candidates,
         currentVoterToCandidateId,
         address,
+        recentResults,
       }}
     >
       {children}
