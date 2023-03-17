@@ -71,7 +71,7 @@ function Results() {
               {resultsList &&
                 resultsList.map((row, index) => (
                   <tr key={row.id} className="even:bg-blue-100">
-                    <td>{index}</td>
+                    <td>{index + 1}</td>
                     <td>{row.name}</td>
                     <td>{row.partyName}</td>
                     <td>{row.votes}</td>

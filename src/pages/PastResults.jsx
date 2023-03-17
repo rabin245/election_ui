@@ -1,11 +1,12 @@
 import { ContractContext } from "../context/contractContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 const PastResults = () => {
   const { electionsTimeList: timeList, pastElections } =
     useContext(ContractContext);
 
   const [electionsTimeList, setElectionsTimeList] = useState([]);
+  const [selectedElectionTime, setSelectedElectionTime] = useState(null);
   const [selectedElectionResult, setSelectedElectionResult] = useState([]);
   const [pastElectionResults, setPastElectionResults] = useState({});
 
@@ -15,8 +16,19 @@ const PastResults = () => {
     setPastElectionResults(pastElections);
   }, [pastElections]);
 
+  const sortedElectionResult = useMemo(
+    () =>
+      selectedElectionResult.sort((a, b) => {
+        const aVotes = parseInt(a.votes);
+        const bVotes = parseInt(b.votes);
+        return bVotes - aVotes;
+      }),
+    [selectedElectionResult]
+  );
+
   const handleSelect = (e) => {
     const time = parseInt(e.target.value);
+    setSelectedElectionTime(time);
     setSelectedElectionResult(pastElectionResults[time]);
   };
 
@@ -61,9 +73,9 @@ const PastResults = () => {
             </thead>
             <tbody className="border border-gray-300">
               {selectedElectionResult &&
-                selectedElectionResult.map((row, index) => (
+                sortedElectionResult.map((row, index) => (
                   <tr key={row.id} className="even:bg-blue-100">
-                    <td>{index}</td>
+                    <td>{index + 1}</td>
                     <td>{row.name}</td>
                     <td>{row.partyName}</td>
                     <td>{row.votes}</td>
