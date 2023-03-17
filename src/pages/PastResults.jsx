@@ -7,7 +7,6 @@ const PastResults = () => {
     useContext(ContractContext);
 
   const [electionsTimeList, setElectionsTimeList] = useState([]);
-  const [selectedElectionTime, setSelectedElectionTime] = useState(null);
   const [selectedElectionResult, setSelectedElectionResult] = useState([]);
   const [pastElectionResults, setPastElectionResults] = useState({});
 
@@ -29,7 +28,6 @@ const PastResults = () => {
 
   const handleSelect = (e) => {
     const time = parseInt(e.target.value);
-    setSelectedElectionTime(time);
     setSelectedElectionResult(pastElectionResults[time]);
   };
 
@@ -103,7 +101,7 @@ const PastResults = () => {
               </tr>
             </thead>
             <tbody className="border border-gray-300">
-              {selectedElectionResult &&
+              {selectedElectionResult.lengt > 0 &&
                 sortedElectionResult.map((row, index) => (
                   <tr key={row.id} className="even:bg-blue-100">
                     <td>{index + 1}</td>
@@ -115,7 +113,9 @@ const PastResults = () => {
             </tbody>
           </table>
         </div>
-        <BarChart chartData={chartData} options={options} />
+        {selectedElectionResult.length > 0 && (
+          <BarChart chartData={chartData} options={options} />
+        )}
       </div>
     </div>
   );

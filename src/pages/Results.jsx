@@ -68,7 +68,7 @@ function Results() {
               </tr>
             </thead>
             <tbody className="border border-gray-300">
-              {resultsList &&
+              {resultsList.length > 0 &&
                 resultsList.map((row, index) => (
                   <tr key={row.id} className="even:bg-blue-100">
                     <td>{index + 1}</td>
@@ -80,7 +80,9 @@ function Results() {
             </tbody>
           </table>
         </div>
-        <BarChart chartData={chartData} options={options} />
+        {resultsList.length > 0 && (
+          <BarChart chartData={chartData} options={options} />
+        )}
       </div>
     </div>
   );
