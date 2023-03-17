@@ -21,13 +21,12 @@ const CreateCandidate = () => {
     setNewCandidate((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(newCandidate);
 
+    await addCandidate(newCandidate.id, newCandidate.name, newCandidate.party);
     setNewCandidate(initialCandidate);
-    // addCandidate(newCandidate);
-    addCandidate(newCandidate.id, newCandidate.name, newCandidate.party);
   };
 
   return (

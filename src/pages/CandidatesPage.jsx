@@ -27,12 +27,12 @@ const CandidatesPage = () => {
   return (
     <div className="mainDiv">
       {/* main body */}
-      <div className="mainContent h-screen bg-white lg:ml-64">
+      <div className="mainContent bg-white lg:ml-64">
         {isAdmin ? (
-          <div className="buttons px-4 pt-2 flex justify-end gap-2">
+          <div className="buttons px-4 pt-2 flex justify-end gap-2 sticky top-0">
             <div className="relative rounded-full group/add">
               <button
-                className="border hover:border-gray-300 p-3 max-w-sm bg-gray-50
+                className="border hover:border-blue-300 p-3 max-w-sm bg-gray-50 shadow-md
                         rounded-full hover:shadow-lg focus:outline-none hover:bg-blue-400
                         transition duration-200 each-in-out active:shadow-xl flex items-center group/addButton
                         disabled:cursor-not-allowed disabled:opacity-75"
@@ -71,7 +71,7 @@ const CandidatesPage = () => {
             </div>
             <div className="relative rounded-full group/empty">
               <button
-                className="border hover:border-gray-300 p-3 max-w-sm bg-gray-50
+                className="border hover:border-red-300 p-3 max-w-sm bg-gray-50 shadow-md
                         rounded-full hover:shadow-lg focus:outline-none hover:bg-red-400
                         transition duration-200 each-in-out active:shadow-xl flex items-center group/emptyButton
                         disabled:cursor-not-allowed disabled:opacity-75"
