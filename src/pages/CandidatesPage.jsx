@@ -2,15 +2,26 @@ import { useState, useContext } from "react";
 import CandidatesList from "../components/CandidatesList";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
+import { ContractContext } from "../context/contractContext";
 
 const CandidatesPage = () => {
   const navigate = useNavigate();
   const { isAdmin } = useContext(AuthContext);
+  const { isElectionStarted, emptyCandidates } = useContext(ContractContext);
 
   const [currentCandidate, setCurrrentCandidate] = useState(null);
 
   const selectCurrentCandidate = (id) => {
     setCurrrentCandidate(id);
+  };
+
+  const addNewCandidate = () => {
+    navigate("/candidates/new");
+  };
+
+  const emptyCandidatesList = () => {
+    if (window.confirm("Are you sure you want to empty the candidates list?"))
+      emptyCandidates();
   };
 
   return (
@@ -23,10 +34,10 @@ const CandidatesPage = () => {
               <button
                 className="border hover:border-gray-300 p-3 max-w-sm bg-gray-50
                         rounded-full hover:shadow-lg focus:outline-none hover:bg-blue-400
-                        transition duration-200 each-in-out active:shadow-xl flex items-center group/addButton"
-                onClick={() => {
-                  navigate("/candidates/new");
-                }}
+                        transition duration-200 each-in-out active:shadow-xl flex items-center group/addButton
+                        disabled:cursor-not-allowed disabled:opacity-75"
+                onClick={addNewCandidate}
+                disabled={isElectionStarted}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +73,10 @@ const CandidatesPage = () => {
               <button
                 className="border hover:border-gray-300 p-3 max-w-sm bg-gray-50
                         rounded-full hover:shadow-lg focus:outline-none hover:bg-red-400
-                        transition duration-200 each-in-out active:shadow-xl flex items-center group/emptyButton"
+                        transition duration-200 each-in-out active:shadow-xl flex items-center group/emptyButton
+                        disabled:cursor-not-allowed disabled:opacity-75"
+                onClick={emptyCandidatesList}
+                disabled={isElectionStarted}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

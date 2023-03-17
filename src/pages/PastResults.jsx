@@ -101,7 +101,7 @@ const PastResults = () => {
               </tr>
             </thead>
             <tbody className="border border-gray-300">
-              {selectedElectionResult.lengt > 0 &&
+              {selectedElectionResult.length > 0 &&
                 sortedElectionResult.map((row, index) => (
                   <tr key={row.id} className="even:bg-blue-100">
                     <td>{index + 1}</td>

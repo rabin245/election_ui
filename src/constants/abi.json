@@ -57,6 +57,12 @@
   },
   {
     "anonymous": false,
+    "inputs": [],
+    "name": "CandidateListEmptied",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
     "inputs": [
       {
         "indexed": false,
@@ -139,6 +145,13 @@
       }
     ],
     "name": "addCandidate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "emptyCandidates",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
