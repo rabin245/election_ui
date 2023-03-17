@@ -11,6 +11,7 @@ import CandidatesPage from "./pages/CandidatesPage";
 import CreateCandidate from "./pages/CreateCandidate";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import ProtectedAuthRoute from "./routes/ProtectedAuthRoute";
+import PastResults from "./pages/PastResults";
 
 const Layout = () => {
   return (
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/results",
         element: <Results />,
+      },
+      {
+        path: "/results/old",
+        element: <PastResults />,
       },
       {
         path: "/candidates",
