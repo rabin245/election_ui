@@ -1,5 +1,6 @@
 import { ContractContext } from "../context/contractContext";
 import { useContext, useEffect, useMemo, useState } from "react";
+import { BarChart } from "../components/BarChart";
 
 const PastResults = () => {
   const { electionsTimeList: timeList, pastElections } =
@@ -36,6 +37,36 @@ const PastResults = () => {
     const date = new Date(time);
     // return date.toDateString();  // will use this later
     return date.toLocaleString();
+  };
+
+  const chartData = useMemo(() => {
+    return {
+      labels: selectedElectionResult.map((candidate) => candidate.name),
+      datasets: [
+        {
+          label: "Votes",
+          data: selectedElectionResult.map((candidate) => candidate.votes),
+          backgroundColor: ["rgb(96 165 250)", "rgb(56 189 248)"],
+          borderWidth: 1,
+        },
+      ],
+    };
+  }, [selectedElectionResult]);
+
+  const options = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+    },
   };
 
   return (
@@ -84,6 +115,7 @@ const PastResults = () => {
             </tbody>
           </table>
         </div>
+        <BarChart chartData={chartData} options={options} />
       </div>
     </div>
   );
