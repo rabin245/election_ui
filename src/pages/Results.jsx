@@ -68,18 +68,21 @@ function Results() {
               </tr>
             </thead>
             <tbody className="border border-gray-300">
-              {resultsList.map((row, index) => (
-                <tr key={row.id.toString()} className="even:bg-blue-100">
-                  <td>{index}</td>
-                  <td>{row.name}</td>
-                  <td>{row.partyName}</td>
-                  <td>{row.votes.toString()}</td>
-                </tr>
-              ))}
+              {resultsList.length > 0 &&
+                resultsList.map((row, index) => (
+                  <tr key={row.id} className="even:bg-blue-100">
+                    <td>{index + 1}</td>
+                    <td>{row.name}</td>
+                    <td>{row.partyName}</td>
+                    <td>{row.votes}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
-        <BarChart chartData={chartData} options={options} />
+        {resultsList.length > 0 && (
+          <BarChart chartData={chartData} options={options} />
+        )}
       </div>
     </div>
   );

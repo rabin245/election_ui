@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { abi, contractAddress } from "../constants/index";
 
@@ -17,6 +17,8 @@ export const ContractContextProvider = ({ children }) => {
   const [currentVoterToCandidateId, setCurrentVoterToCandidateId] =
     useState(null);
   const [recentResults, setRecentResults] = useState([]);
+  const [electionsTimeList, setElectionsTimeList] = useState([]);
+  const [pastElections, setPastElections] = useState({});
 
   // to know which network the user is connected to
   // as admin address should vary according to the network
@@ -26,9 +28,11 @@ export const ContractContextProvider = ({ children }) => {
 
   // state changing functions
   const startElection = async () => {
-    const transaction = await contract.startElection();
+    const electionTime = new Date().getTime();
+    const transaction = await contract.startElection(electionTime);
     transaction.wait();
   };
+
   const endElection = async () => {
     const transaction = await contract.endElection();
     transaction.wait();
@@ -68,7 +72,7 @@ export const ContractContextProvider = ({ children }) => {
   const getCurrentVoterToCandidateId = async () => {
     const currentVoterToCandidateId =
       await contract.getCurrentVoterToCandidateId();
-    setCurrentVoterToCandidateId(currentVoterToCandidateId);
+    setCurrentVoterToCandidateId(currentVoterToCandidateId.toString());
   };
 
   const getCandidates = async () => {
@@ -101,6 +105,35 @@ export const ContractContextProvider = ({ children }) => {
     );
   };
 
+  const getElectionsTimeList = async () => {
+    const electionsTimeList = await contract.getElectionsTimeList();
+    setElectionsTimeList(() =>
+      electionsTimeList.map((time) => {
+        return parseInt(time.toString());
+      })
+    );
+  };
+
+  const getPastElectionRecords = async () => {
+    try {
+      electionsTimeList.forEach(async (time) => {
+        const pastElections = await contract.getElectionTimeToResult(time);
+        let record = pastElections.map((result) => {
+          return {
+            id: result.id.toString(),
+            name: result.name,
+            partyName: result.partyName,
+            votes: result.votes.toString(),
+          };
+        });
+
+        setPastElections((prev) => ({ ...prev, [time]: record }));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // useeffects
   useEffect(() => {
     async function init() {
@@ -109,7 +142,6 @@ export const ContractContextProvider = ({ children }) => {
         const addresses = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
-        console.log(addresses);
         setAddress(addresses[0]);
       } else {
         console.log("Please install MetaMask");
@@ -122,7 +154,6 @@ export const ContractContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log("now listening to events");
     // event listeners
 
     contract.on("ElectionStarted", () => {
@@ -181,7 +212,12 @@ export const ContractContextProvider = ({ children }) => {
     getHasVoted();
     getCurrentVoterToCandidateId();
     getRecentResults();
+    getElectionsTimeList();
   }, [isElectionStarted]);
+
+  useEffect(() => {
+    getPastElectionRecords();
+  }, [electionsTimeList, isElectionStarted]);
 
   return (
     <ContractContext.Provider
@@ -202,6 +238,8 @@ export const ContractContextProvider = ({ children }) => {
         currentVoterToCandidateId,
         address,
         recentResults,
+        electionsTimeList,
+        pastElections,
       }}
     >
       {children}

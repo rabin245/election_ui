@@ -27,13 +27,18 @@ function SideBar() {
     }
   };
 
+  const toggleSidebar = () => {
+    setOpen((prev) => !prev);
+  };
+
+  const closeSidebar = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       {/* toggle button */}
-      <SideBarToggleButton
-        open={open}
-        onClick={() => setOpen((prev) => !prev)}
-      />
+      <SideBarToggleButton open={open} onClick={toggleSidebar} />
 
       {/* sidebar */}
       <div
@@ -71,7 +76,7 @@ function SideBar() {
             {/* close button */}
             <span
               className="cursor-pointer lg:hidden ml-1"
-              onClick={() => setOpen(!open)}
+              onClick={toggleSidebar}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +97,7 @@ function SideBar() {
         <Hr />
 
         <Link to="/">
-          <SideBarButton title="Home">
+          <SideBarButton title="Home" closeSidebar={closeSidebar}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -107,7 +112,7 @@ function SideBar() {
 
         {(isAdmin || !user) && (
           <Link to="/candidates">
-            <SideBarButton title="Candidates">
+            <SideBarButton title="Candidates" closeSidebar={closeSidebar}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="icon icon-tabler icon-tabler-list-details"
@@ -134,7 +139,7 @@ function SideBar() {
 
         {isAdmin && (
           <Link to="/candidates/new">
-            <SideBarButton title="New Candidate">
+            <SideBarButton title="New Candidate" closeSidebar={closeSidebar}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="icon icon-tabler icon-tabler-user-plus"
@@ -158,7 +163,7 @@ function SideBar() {
         )}
 
         <Link to="/results">
-          <SideBarButton title="Results">
+          <SideBarButton title="Results" closeSidebar={closeSidebar}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="icon icon-tabler icon-tabler-file-analytics"
@@ -181,11 +186,35 @@ function SideBar() {
           </SideBarButton>
         </Link>
 
+        <Link to="/results/old">
+          <SideBarButton title="Past Elections" closeSidebar={closeSidebar}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="icon icon-tabler icon-tabler-list-search"
+              width={24}
+              height={24}
+              viewBox="0 0 24 24"
+              strokeWidth={1.75}
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M15 15m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+              <path d="M18.5 18.5l2.5 2.5"></path>
+              <path d="M4 6h16"></path>
+              <path d="M4 12h4"></path>
+              <path d="M4 18h4"></path>
+            </svg>
+          </SideBarButton>
+        </Link>
+
         <Hr />
 
         {user ? (
           <div onClick={handleLogOut}>
-            <SideBarButton title="Logout">
+            <SideBarButton title="Logout" closeSidebar={closeSidebar}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -204,7 +233,7 @@ function SideBar() {
           </div>
         ) : (
           <Link to="/login">
-            <SideBarButton title="Login">
+            <SideBarButton title="Login" closeSidebar={closeSidebar}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
