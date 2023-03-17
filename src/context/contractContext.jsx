@@ -106,7 +106,6 @@ export const ContractContextProvider = ({ children }) => {
   };
 
   const getElectionsTimeList = async () => {
-    console.log("getting elections time list");
     const electionsTimeList = await contract.getElectionsTimeList();
     setElectionsTimeList(() =>
       electionsTimeList.map((time) => {
