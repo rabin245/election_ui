@@ -58,6 +58,11 @@ export const ContractContextProvider = ({ children }) => {
     transaction.wait();
   };
 
+  const emptyCandidates = async () => {
+    const transaction = await contract.emptyCandidates();
+    transaction.wait();
+  };
+
   // view functions
   const getHasVoted = async () => {
     const hasVoted = await contract.getHasVoted();
@@ -201,6 +206,15 @@ export const ContractContextProvider = ({ children }) => {
         return prev.filter((candidate) => candidate.id !== id.toString());
       });
     });
+
+    contract.on("CandidateListEmptied", () => {
+      console.log("Candidates list emptied");
+      setCandidates([]);
+    });
+
+    return () => {
+      contract.removeAllListeners();
+    };
   }, []);
 
   useEffect(() => {
@@ -240,6 +254,7 @@ export const ContractContextProvider = ({ children }) => {
         recentResults,
         electionsTimeList,
         pastElections,
+        emptyCandidates,
       }}
     >
       {children}

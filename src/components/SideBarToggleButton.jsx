@@ -1,7 +1,7 @@
 function SideBarToggleButton({ open, onClick }) {
   return (
     <div
-      className={`toggleButton absolute top-3 left-3 z-1 p-2 text-white cursor-pointer bg-gray-800 rounded-lg shadow-xl ${
+      className={`toggleButton absolute top-3 left-3 z-10 p-2 text-white cursor-pointer bg-gray-800 rounded-lg shadow-xl ${
         open ? "hidden" : "block"
       }`}
       onClick={onClick}
