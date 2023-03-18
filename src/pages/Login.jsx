@@ -49,7 +49,9 @@ const Login = () => {
       };
 
       await login(user);
-      navigate("/");
+      navigate("/login/verify", {
+        state: { email: userInputs.email, address },
+      });
     } catch (error) {
       console.log(error.response.status, error.response.data);
 
