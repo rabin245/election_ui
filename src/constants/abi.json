@@ -142,6 +142,11 @@
         "internalType": "string",
         "name": "partyName",
         "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "imageUrl",
+        "type": "string"
       }
     ],
     "name": "addCandidate",
@@ -161,52 +166,6 @@
     "name": "endElection",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      }
-    ],
-    "name": "getCandidate",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "partyName",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "imageUrl",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "votes",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct Election.Candidate",
-        "name": "candidate",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -382,19 +341,6 @@
         "internalType": "struct Election.Candidate[]",
         "name": "",
         "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getVoters",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
       }
     ],
     "stateMutability": "view",

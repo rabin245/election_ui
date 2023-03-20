@@ -53,7 +53,6 @@ export default function Register() {
         ...userInputs,
         address,
       };
-      console.log(user);
       await register(user);
       navigate("/login");
     } catch (error) {

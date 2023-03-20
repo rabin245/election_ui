@@ -20,7 +20,6 @@ export const AuthContextProvider = ({ children }) => {
 
   async function login(userInputs) {
     const response = await axiosInstance.post("/auth/login", userInputs);
-    // setUser(response.data);
     console.log(response.data);
   }
 

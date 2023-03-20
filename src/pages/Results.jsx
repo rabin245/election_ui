@@ -10,7 +10,6 @@ function Results() {
   const [candidates, setCandidates] = useState([]);
 
   useEffect(() => {
-    console.log("length of results", recentResults.length);
     if (recentResults.length > 0) setCandidates(recentResults);
     else setCandidates(cands);
   }, [cands, recentResults]);

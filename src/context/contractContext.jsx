@@ -28,14 +28,22 @@ export const ContractContextProvider = ({ children }) => {
 
   // state changing functions
   const startElection = async () => {
-    const electionTime = new Date().getTime();
-    const transaction = await contract.startElection(electionTime);
-    transaction.wait();
+    try {
+      const electionTime = new Date().getTime();
+      const transaction = await contract.startElection(electionTime);
+      transaction.wait();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const endElection = async () => {
-    const transaction = await contract.endElection();
-    transaction.wait();
+    try {
+      const transaction = await contract.endElection();
+      transaction.wait();
+    } catch (error) {
+      console.log(erro);
+    }
   };
 
   const voteToCandidate = async (id) => {
@@ -48,75 +56,116 @@ export const ContractContextProvider = ({ children }) => {
     }
   };
 
-  const addCandidate = async (id, name, partyName) => {
-    const transaction = await contract.addCandidate(id, name, partyName);
-    transaction.wait();
+  const addCandidate = async (id, name, partyName, imageUrl) => {
+    try {
+      const transaction = await contract.addCandidate(
+        id,
+        name,
+        partyName,
+        imageUrl.length > 0 ? imageUrl : "https://picsum.photos/800/525"
+      );
+      transaction.wait();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const removeCandidate = async (id) => {
-    const transaction = await contract.removeCandidate(id);
-    transaction.wait();
+    try {
+      const transaction = await contract.removeCandidate(id);
+      transaction.wait();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const emptyCandidates = async () => {
-    const transaction = await contract.emptyCandidates();
-    transaction.wait();
+    try {
+      const transaction = await contract.emptyCandidates();
+      transaction.wait();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // view functions
   const getHasVoted = async () => {
-    const hasVoted = await contract.getHasVoted();
-    setHasVoted(hasVoted);
+    try {
+      const hasVoted = await contract.getHasVoted();
+      setHasVoted(hasVoted);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getIsElectionStarted = async () => {
-    const isElectionStarted = await contract.getHasStarted();
-    setIsElectionStarted(isElectionStarted);
+    try {
+      const isElectionStarted = await contract.getHasStarted();
+      setIsElectionStarted(isElectionStarted);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getCurrentVoterToCandidateId = async () => {
-    const currentVoterToCandidateId =
-      await contract.getCurrentVoterToCandidateId();
-    setCurrentVoterToCandidateId(currentVoterToCandidateId.toString());
+    try {
+      const currentVoterToCandidateId =
+        await contract.getCurrentVoterToCandidateId();
+      setCurrentVoterToCandidateId(currentVoterToCandidateId.toString());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getCandidates = async () => {
-    const candidates = await contract.getCandidates();
-    setCandidates(
-      candidates.map((candidate) => {
-        return {
-          id: candidate.id.toString(),
-          name: candidate.name,
-          partyName: candidate.partyName,
-          votes: candidate.votes.toString(),
-          imageUrl: candidate.imageUrl,
-        };
-      })
-    );
+    try {
+      const candidates = await contract.getCandidates();
+      setCandidates(
+        candidates.map((candidate) => {
+          return {
+            id: candidate.id.toString(),
+            name: candidate.name,
+            partyName: candidate.partyName,
+            votes: candidate.votes.toString(),
+            imageUrl: candidate.imageUrl,
+          };
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getRecentResults = async () => {
-    const recentResults = await contract.getRecentResults();
-    setRecentResults(
-      recentResults.map((result) => {
-        return {
-          id: result.id.toString(),
-          name: result.name,
-          partyName: result.partyName,
-          votes: result.votes.toString(),
-          imageUrl: result.imageUrl,
-        };
-      })
-    );
+    try {
+      const recentResults = await contract.getRecentResults();
+      setRecentResults(
+        recentResults.map((result) => {
+          return {
+            id: result.id.toString(),
+            name: result.name,
+            partyName: result.partyName,
+            votes: result.votes.toString(),
+            imageUrl: result.imageUrl,
+          };
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getElectionsTimeList = async () => {
-    const electionsTimeList = await contract.getElectionsTimeList();
-    setElectionsTimeList(() =>
-      electionsTimeList.map((time) => {
-        return parseInt(time.toString());
-      })
-    );
+    try {
+      const electionsTimeList = await contract.getElectionsTimeList();
+      setElectionsTimeList(() =>
+        electionsTimeList.map((time) => {
+          return parseInt(time.toString());
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getPastElectionRecords = async () => {
@@ -173,7 +222,7 @@ export const ContractContextProvider = ({ children }) => {
     });
 
     contract.on("VoteCasted", (updatedCandidate) => {
-      console.log("Vote casted to candidate", updatedCandidate);
+      console.log("Vote casted to candidate", updatedCandidate.id.toString());
       setCandidates((prev) => {
         return prev.map((candidate) => {
           if (candidate.id === updatedCandidate.id.toString()) {
@@ -185,7 +234,6 @@ export const ContractContextProvider = ({ children }) => {
     });
 
     contract.on("CandidateAdded", (candidate) => {
-      console.log("Candidate added", candidate);
       setCandidates((prev) => {
         return [
           ...prev,
@@ -218,10 +266,6 @@ export const ContractContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    // if (isElectionStarted) {
-    //   getHasVoted();
-    //   getCurrentVoterToCandidateId();
-    // }
     getCandidates();
     getHasVoted();
     getCurrentVoterToCandidateId();

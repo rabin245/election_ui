@@ -24,9 +24,7 @@ function AdminDashboard() {
         </button>
 
         <p className="mt-4 w-3/4 text-center">
-          {isElectionStarted
-            ? "Election has started"
-            : "Election has not started"}
+          {isElectionStarted ? "Election has started" : "Election has ended"}
         </p>
       </div>
     </div>

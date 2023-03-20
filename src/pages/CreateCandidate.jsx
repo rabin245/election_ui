@@ -1,14 +1,15 @@
 import Banner from "../assets/banner.png";
 import { useState, useContext } from "react";
-import { nanoid } from "nanoid";
+import { nanoid, customAlphabet } from "nanoid";
 import { ContractContext } from "../context/contractContext";
 
 const CreateCandidate = () => {
   const { addCandidate, isElectionStarted } = useContext(ContractContext);
 
+  const nanoid = customAlphabet("1234567890", 6);
+
   const initialCandidate = {
-    // id: nanoid(),
-    id: 0,
+    id: nanoid(),
     name: "",
     party: "",
     image: "",
@@ -23,9 +24,13 @@ const CreateCandidate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(newCandidate);
 
-    await addCandidate(newCandidate.id, newCandidate.name, newCandidate.party);
+    await addCandidate(
+      newCandidate.id,
+      newCandidate.name,
+      newCandidate.party,
+      newCandidate.image
+    );
     setNewCandidate(initialCandidate);
   };
 
@@ -42,21 +47,13 @@ const CreateCandidate = () => {
                 Add Candidate
               </h1>
 
-              <div className="mb-2">
-                <label className="text-gray-600 font-semibold block">Id</label>
-                <input
-                  type="number"
-                  placeholder="contract uses int for now"
-                  name="id"
-                  value={newCandidate.id}
-                  className="w-full px-4 py-2 mt-2 text-sm border rounded-md
-                         focus:border-blue-500 focus:outline-blue-500"
-                  onChange={handleChange}
-                />
-              </div>
+              <span className="block text-sm text-red-600 font-light tracking-wide">
+                * Required
+              </span>
+
               <div className="mb-2">
                 <label className="text-gray-600 font-semibold block">
-                  Name
+                  Name*
                 </label>
                 <input
                   type="text"
@@ -70,7 +67,7 @@ const CreateCandidate = () => {
 
               <div className="mb-2">
                 <label className="text-gray-600 font-semibold block">
-                  Party
+                  Party*
                 </label>
                 <input
                   type="text"
