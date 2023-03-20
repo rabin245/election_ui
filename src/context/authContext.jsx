@@ -20,7 +20,13 @@ export const AuthContextProvider = ({ children }) => {
 
   async function login(userInputs) {
     const response = await axiosInstance.post("/auth/login", userInputs);
-    setUser(response.data);
+    // setUser(response.data);
+    console.log(response.data);
+  }
+
+  async function verify(user) {
+    const response = await axiosInstance.post("/auth/verify", user);
+    setUser(response.data.user);
     console.log(response.data);
   }
 
@@ -44,7 +50,9 @@ export const AuthContextProvider = ({ children }) => {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, isAdmin, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, isAdmin, login, register, logout, verify }}
+    >
       {children}
     </AuthContext.Provider>
   );

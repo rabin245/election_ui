@@ -12,6 +12,7 @@ import CreateCandidate from "./pages/CreateCandidate";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import ProtectedAuthRoute from "./routes/ProtectedAuthRoute";
 import PastResults from "./pages/PastResults";
+import LoginVerification from "./pages/LoginVerification";
 
 const Layout = () => {
   return (
@@ -58,9 +59,13 @@ const router = createBrowserRouter([
     path: "/login",
     element: (
       <ProtectedAuthRoute>
-        <Login />
+        <Outlet />
       </ProtectedAuthRoute>
     ),
+    children: [
+      { path: "/login/", element: <Login /> },
+      { path: "/login/verify", element: <LoginVerification /> },
+    ],
   },
   {
     path: "/register",
