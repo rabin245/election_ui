@@ -13,12 +13,17 @@ The UI of the election dapp that uses blockchain technology, allows users to vot
 
 Access the site [here](https://electiondapp.onrender.com)
 
-## Project Screenshots
+## Requirements
 
-<img src="./screenshots/ss1.png" height="auto" width="700px">
-<img src="./screenshots/ss2.png" height="auto" width="700px">
-<img src="./screenshots/ss3.png" height="auto" width="700px">
-<img src="./screenshots/ss4.png" height="auto" width="700px">
+- [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+  - You'll know you did it right if you can run `git --version` and you see a response like:
+    `git version x.x.x`
+- [Nodejs](https://nodejs.org/en/)
+  - If the installation is successful:
+    ```shell
+    $ node --version
+    v16.17.0
+    ```
 
 ## Installation and Setup
 
