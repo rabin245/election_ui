@@ -39,3 +39,11 @@ Access the site [here](https://electiondapp.onrender.com)
 - Start server:
 
   `npm run dev`
+
+## Credits
+
+List of contributors:
+
+- [Aayush Raut](https://github.com/aayussraut)
+- [Prasmit Neupane](https://github.com/pras557)
+- [Amrit Khatiwada](https://github.com/amritkh078)
