@@ -126,7 +126,7 @@ export default function Register() {
               className="block w-full px-4 py-2 mt-2 text-sm border rounded-md
                         focus:border-blue-500 focus:outline-blue-500
                           invalid:border-red-500 peer/password"
-              pattern={"[a-zA-Z0-9]{6,}"}
+              pattern={"[a-zA-Z0-9!@#$%^&*()-=_+]{6,}"}
               value={userInputs.password}
               onChange={handleChange}
             />
