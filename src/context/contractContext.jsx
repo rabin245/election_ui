@@ -191,12 +191,20 @@ export const ContractContextProvider = ({ children }) => {
   // useeffects
   useEffect(() => {
     async function init() {
+      let needRefresh =
+        JSON.parse(sessionStorage.getItem("needRefresh")) ?? true;
+      console.log(needRefresh);
+
       if (typeof window.ethereum !== "undefined") {
         setIsMetaMaskInstalled(true);
         const addresses = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
         setAddress(addresses[0]);
+        if (needRefresh) {
+          sessionStorage.setItem("needRefresh", false);
+          window.location.reload();
+        }
       } else {
         console.log("Please install MetaMask");
         setIsMetaMaskInstalled(false);
