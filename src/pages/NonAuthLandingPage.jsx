@@ -10,7 +10,7 @@ export default function NonAuthLandingPage() {
       {/* main body */}
       <div className="mainContent h-screen bg-white lg:ml-64 flex flex-col ">
         <div className="banner">
-          <img src={Banner} alt="banner" />
+          <img className="banner-img w-full" src={Banner} alt="banner" />
         </div>
 
         <div className="cards p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
