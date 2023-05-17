@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "https://electiondapp-api.onrender.com",
     withCredentials: true,
     headers: {
       "Content-type": "application/json",
