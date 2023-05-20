@@ -159,7 +159,7 @@ export default function Register() {
           <div className="flex justify-center text-sm text-gray-500">
             <span>
               Already have an account?{" "}
-              <Link to="/Login">
+              <Link to="/login">
                 <span className="text-blue-400 hover:text-blue-600 hover:underline">
                   Login
                 </span>
