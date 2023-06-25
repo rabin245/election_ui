@@ -1,6 +1,7 @@
 # Election Dapp
 
-The UI of the election dapp that uses blockchain technology, allows users to vote for candidates and track the results of the election, built with React and Tailwind CSS.
+The UI of the election dapp that uses blockchain technology, allows users to vote for candidates and track the results of the election, built with React and Tailwind CSS.<br>
+**Note**: The project requires the installation of [Metamask](https://metamask.io/download/) extension in your browser.
 
 ## Other repos
 
